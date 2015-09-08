@@ -13,6 +13,7 @@
 		B2E0DF0F1B9F2A4C00D3B6F5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2E0DF0E1B9F2A4C00D3B6F5 /* Images.xcassets */; };
 		B2E0DF121B9F2A4C00D3B6F5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E0DF101B9F2A4C00D3B6F5 /* LaunchScreen.xib */; };
 		B2E0DF1E1B9F2A4C00D3B6F5 /* OnTheMap_SubmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF1D1B9F2A4C00D3B6F5 /* OnTheMap_SubmissionTests.swift */; };
+		B2E0DF281B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		B2E0DF171B9F2A4C00D3B6F5 /* OnTheMap-SubmissionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OnTheMap-SubmissionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0DF1C1B9F2A4C00D3B6F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2E0DF1D1B9F2A4C00D3B6F5 /* OnTheMap_SubmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMap_SubmissionTests.swift; sourceTree = "<group>"; };
+		B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				B2E0DF071B9F2A4C00D3B6F5 /* AppDelegate.swift */,
 				B2E0DF091B9F2A4C00D3B6F5 /* ViewController.swift */,
+				B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */,
 				B2E0DF0B1B9F2A4C00D3B6F5 /* Main.storyboard */,
 				B2E0DF0E1B9F2A4C00D3B6F5 /* Images.xcassets */,
 				B2E0DF101B9F2A4C00D3B6F5 /* LaunchScreen.xib */,
@@ -214,6 +217,7 @@
 			files = (
 				B2E0DF0A1B9F2A4C00D3B6F5 /* ViewController.swift in Sources */,
 				B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */,
+				B2E0DF281B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

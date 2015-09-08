@@ -10,9 +10,24 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var udacityImageOutlet: UIImageView!
+    @IBOutlet weak var emailOutlet: UITextField!
+    @IBOutlet weak var passwordOutlet: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //set up backgound color
+        let background = CAGradientLayer().udacityOrange()
+        background.frame = self.view.bounds
+        self.view.layer.insertSublayer(background, atIndex: 0)
+        
+        //format text inputs
+        var frameRect = emailOutlet.frame
+        frameRect.size.height = 100
+        emailOutlet.frame = frameRect
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
