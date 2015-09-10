@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2D96B4B1BA1DDA6000A0470 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */; };
 		B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF071B9F2A4C00D3B6F5 /* AppDelegate.swift */; };
 		B2E0DF0A1B9F2A4C00D3B6F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF091B9F2A4C00D3B6F5 /* ViewController.swift */; };
 		B2E0DF0D1B9F2A4C00D3B6F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2E0DF0B1B9F2A4C00D3B6F5 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B2E0DF021B9F2A4C00D3B6F5 /* OnTheMap-Submission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OnTheMap-Submission.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0DF061B9F2A4C00D3B6F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2E0DF071B9F2A4C00D3B6F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				B2E0DF091B9F2A4C00D3B6F5 /* ViewController.swift */,
 				B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */,
 				B2E0DF0B1B9F2A4C00D3B6F5 /* Main.storyboard */,
+				B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */,
 				B2E0DF0E1B9F2A4C00D3B6F5 /* Images.xcassets */,
 				B2E0DF101B9F2A4C00D3B6F5 /* LaunchScreen.xib */,
 				B2E0DF051B9F2A4C00D3B6F5 /* Supporting Files */,
@@ -218,6 +221,7 @@
 				B2E0DF0A1B9F2A4C00D3B6F5 /* ViewController.swift in Sources */,
 				B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */,
 				B2E0DF281B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift in Sources */,
+				B2D96B4B1BA1DDA6000A0470 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +417,7 @@
 				B2E0DF231B9F2A4C00D3B6F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B2E0DF241B9F2A4C00D3B6F5 /* Build configuration list for PBXNativeTarget "OnTheMap-SubmissionTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +426,7 @@
 				B2E0DF261B9F2A4C00D3B6F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

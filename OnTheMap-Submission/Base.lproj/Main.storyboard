@@ -122,10 +122,10 @@
             </objects>
             <point key="canvasLocation" x="1442" y="127"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="RkE-hm-02k">
             <objects>
-                <viewController id="dot-Kb-JN8" sceneMemberID="viewController">
+                <viewController id="dot-Kb-JN8" customClass="MapViewController" customModule="OnTheMap_Submission" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="E0k-zo-FUN"/>
                         <viewControllerLayoutGuide type="bottom" id="PtA-oA-nvg"/>
@@ -133,7 +133,18 @@
                     <view key="view" contentMode="scaleToFill" id="qRJ-Nc-xyG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VuP-g0-cFB">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VuP-g0-cFB" firstAttribute="leading" secondItem="qRJ-Nc-xyG" secondAttribute="leadingMargin" constant="-16" id="Evt-Qw-V0n"/>
+                            <constraint firstItem="VuP-g0-cFB" firstAttribute="top" secondItem="E0k-zo-FUN" secondAttribute="bottom" id="FgK-ZQ-Gvt"/>
+                            <constraint firstItem="PtA-oA-nvg" firstAttribute="top" secondItem="VuP-g0-cFB" secondAttribute="bottom" id="MS4-rz-RY1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VuP-g0-cFB" secondAttribute="trailing" constant="-16" id="WCR-8w-jac"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ygk-Un-ON5">
                         <barButtonItem key="leftBarButtonItem" image="PinIcon" id="LDK-3Q-BjY"/>
