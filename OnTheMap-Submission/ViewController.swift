@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var udacityImageOutlet: UIImageView!
     @IBOutlet weak var emailOutlet: UITextField!
     @IBOutlet weak var passwordOutlet: UITextField!
+    @IBOutlet weak var loginButtonOutlet: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +24,12 @@ class ViewController: UIViewController {
         self.view.layer.insertSublayer(background, atIndex: 0)
         
         //format text inputs
-        var frameRect = emailOutlet.frame
-        frameRect.size.height = 100
-        emailOutlet.frame = frameRect
+        emailOutlet.borderStyle = UITextBorderStyle.RoundedRect
+        passwordOutlet.borderStyle = UITextBorderStyle.RoundedRect
         
+        //format login button
+        loginButtonOutlet.backgroundColor = UIColor(red: 241/255, green: 86/255, blue: 29/255, alpha: 1)
+        loginButtonOutlet.layer.cornerRadius = 5
         
     }
 
