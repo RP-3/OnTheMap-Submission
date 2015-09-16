@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2A3C52A1BA86463000A8B3F /* request_convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3C5291BA86463000A8B3F /* request_convenience.swift */; };
+		B2A3C52F1BA86B50000A8B3F /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3C52E1BA86B50000A8B3F /* UdacityClient.swift */; };
 		B2D96B4B1BA1DDA6000A0470 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */; };
 		B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF071B9F2A4C00D3B6F5 /* AppDelegate.swift */; };
 		B2E0DF0A1B9F2A4C00D3B6F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF091B9F2A4C00D3B6F5 /* ViewController.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2A3C5291BA86463000A8B3F /* request_convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = request_convenience.swift; sourceTree = "<group>"; };
+		B2A3C52E1BA86B50000A8B3F /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B2E0DF021B9F2A4C00D3B6F5 /* OnTheMap-Submission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OnTheMap-Submission.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E0DF061B9F2A4C00D3B6F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +64,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B2A3C52B1BA868EA000A8B3F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B2A3C52C1BA868F7000A8B3F /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B2A3C52C1BA868F7000A8B3F /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				B2A3C52D1BA86903000A8B3F /* Udacity */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		B2A3C52D1BA86903000A8B3F /* Udacity */ = {
+			isa = PBXGroup;
+			children = (
+				B2A3C52E1BA86B50000A8B3F /* UdacityClient.swift */,
+			);
+			name = Udacity;
+			sourceTree = "<group>";
+		};
 		B2E0DEF91B9F2A4C00D3B6F5 = {
 			isa = PBXGroup;
 			children = (
@@ -81,9 +109,11 @@
 		B2E0DF041B9F2A4C00D3B6F5 /* OnTheMap-Submission */ = {
 			isa = PBXGroup;
 			children = (
+				B2A3C52B1BA868EA000A8B3F /* Model */,
 				B2E0DF071B9F2A4C00D3B6F5 /* AppDelegate.swift */,
 				B2E0DF091B9F2A4C00D3B6F5 /* ViewController.swift */,
 				B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */,
+				B2A3C5291BA86463000A8B3F /* request_convenience.swift */,
 				B2E0DF0B1B9F2A4C00D3B6F5 /* Main.storyboard */,
 				B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */,
 				B2E0DF0E1B9F2A4C00D3B6F5 /* Images.xcassets */,
@@ -220,6 +250,8 @@
 			files = (
 				B2E0DF0A1B9F2A4C00D3B6F5 /* ViewController.swift in Sources */,
 				B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */,
+				B2A3C52F1BA86B50000A8B3F /* UdacityClient.swift in Sources */,
+				B2A3C52A1BA86463000A8B3F /* request_convenience.swift in Sources */,
 				B2E0DF281B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift in Sources */,
 				B2D96B4B1BA1DDA6000A0470 /* MapViewController.swift in Sources */,
 			);

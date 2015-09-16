@@ -15,6 +15,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var passwordOutlet: UITextField!
     @IBOutlet weak var loginButtonOutlet: UIButton!
     
+    let udacity = Udacity.sharedInstance()
+    
+    @IBAction func loginAction(sender: AnyObject) {
+        udacity.login(emailOutlet.text, password: passwordOutlet.text, completionHandler: { (data, response, error) -> Void in
+            if error != nil { // Handle error…
+                println(error)
+                return
+            }
+            println(NSString(data: data, encoding: NSUTF8StringEncoding))
+        })
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,10 +45,6 @@ class ViewController: UIViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
 }
