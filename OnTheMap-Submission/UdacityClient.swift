@@ -26,7 +26,7 @@ class Udacity {
         
         request.POST(url, body: reqBody) { (data, response, error) -> Void in
             if(data != nil){
-                let newData = self.parseUdacityData(data)
+                let newData = self.parseUdacityData(data!)
                 completionHandler(data: newData, response: response, error: error)
             }else{
                 completionHandler(data: data, response: response, error: error)
@@ -49,3 +49,4 @@ class Udacity {
     }
     
 }
+//2oQcETzT6XrD

@@ -18,12 +18,12 @@ class ViewController: UIViewController {
     let udacity = Udacity.sharedInstance()
     
     @IBAction func loginAction(sender: AnyObject) {
-        udacity.login(emailOutlet.text, password: passwordOutlet.text, completionHandler: { (data, response, error) -> Void in
+        udacity.login(emailOutlet.text!, password: passwordOutlet.text!, completionHandler: { (data, response, error) -> Void in
             if error != nil { // Handle error…
-                println(error)
+                print(error)
                 return
             }
-            println(NSString(data: data, encoding: NSUTF8StringEncoding))
+            print(NSString(data: data, encoding: NSUTF8StringEncoding))
         })
     }
 

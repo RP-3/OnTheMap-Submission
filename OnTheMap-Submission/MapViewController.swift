@@ -36,7 +36,7 @@ class MapViewController: UIViewController {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinColor = .Red
-            pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
         else {
             pinView!.annotation = annotation
@@ -52,7 +52,7 @@ class MapViewController: UIViewController {
         
         if control == annotationView.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
-            app.openURL(NSURL(string: annotationView.annotation.subtitle!)!)
+            app.openURL(NSURL(string: annotationView.annotation!.subtitle!!)!)
         }
     }
     

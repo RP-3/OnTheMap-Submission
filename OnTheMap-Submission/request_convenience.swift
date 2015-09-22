@@ -24,27 +24,27 @@ class Request : NSObject {
         super.init()
     }
     
-    func GET(url: String, completionHandler: ((data: NSData!, response: NSURLResponse!, error: NSError!) -> Void)?) {
+    func GET(url: String, completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
         let request = makeRequest(url, method: "GET", body: nil)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
         task.resume()
     }
     
-    func POST(url: String, body: [String : AnyObject], completionHandler: ((data: NSData!, response: NSURLResponse!, error: NSError!) -> Void)?) {
+    func POST(url: String, body: [String : AnyObject], completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
         let request = makeRequest(url, method: "POST", body: body)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
         task.resume()
     }
     
-    func PUT(url: String, body: [String : AnyObject], completionHandler: ((data: NSData!, response: NSURLResponse!, error: NSError!) -> Void)?) {
+    func PUT(url: String, body: [String : AnyObject], completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
         let request = makeRequest(url, method: "PUT", body: nil)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
         task.resume()
     }
     
-    func DELETE(url: String, body: [String : AnyObject], completionHandler: ((data: NSData!, response: NSURLResponse!, error: NSError!) -> Void)?) {
+    func DELETE(url: String, body: [String : AnyObject], completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?){
         let request = makeRequest(url, method: "DELETE", body: nil)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler)
+        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
         task.resume()
     }
     
@@ -58,8 +58,13 @@ class Request : NSObject {
         
         if let requestBodyDictionary = body {
             
-            var err:NSError?
-            let serealisedBody =  NSJSONSerialization.dataWithJSONObject(requestBodyDictionary, options: nil, error: &err)
+            let serealisedBody: NSData?
+            do {
+                serealisedBody = try NSJSONSerialization.dataWithJSONObject(requestBodyDictionary, options: [])
+            } catch let error as NSError {
+                print(error)
+                serealisedBody = nil
+            }
             request.HTTPBody = serealisedBody
             
         }
@@ -95,14 +100,20 @@ class Request : NSObject {
             
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
         
         var parsingError: NSError? = nil
         
-        let parsedResult: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)
+        let parsedResult: AnyObject?
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+        } catch let error as NSError {
+            parsingError = error
+            parsedResult = nil
+        }
         
         if let error = parsingError {
             completionHandler(result: nil, error: error)
