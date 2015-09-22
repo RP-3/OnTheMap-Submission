@@ -24,30 +24,35 @@ class Request : NSObject {
         super.init()
     }
     
-    func GET(url: String, completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
-        let request = makeRequest(url, method: "GET", body: nil)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
-        task.resume()
+    func GET(url: String, callback: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
+//        let request = makeRequest(url, method: "GET", body: nil)
+//        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
+//        task.resume()
     }
     
-    func POST(url: String, body: [String : AnyObject], completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
+    func POST(url: String, body: [String : AnyObject], isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
         let request = makeRequest(url, method: "POST", body: body)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
+        let task = session.dataTaskWithRequest(request) {downloadData, downloadResponse, downloadError in
+            self.parseJSONWithCompletionHandler(downloadData, response: downloadResponse, error: downloadError, isUdacity: isUdacity, completionHandler: callback!)
+        }
         task.resume()
     }
     
-    func PUT(url: String, body: [String : AnyObject], completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
-        let request = makeRequest(url, method: "PUT", body: nil)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
-        task.resume()
+    func PUT(url: String, body: [String : AnyObject], callback: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
+//        let request = makeRequest(url, method: "PUT", body: nil)
+//        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
+//        task.resume()
     }
     
-    func DELETE(url: String, body: [String : AnyObject], completionHandler: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?){
-        let request = makeRequest(url, method: "DELETE", body: nil)
-        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
-        task.resume()
+    func DELETE(url: String, body: [String : AnyObject], callback: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?){
+//        let request = makeRequest(url, method: "DELETE", body: nil)
+//        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
+//        task.resume()
     }
     
+    func parseUdacityData(data:NSData) ->NSData{
+        return data.subdataWithRange(NSMakeRange(5, data.length - 5)) // subset response data
+    }
     
     func makeRequest(url:String, method: String, body: [String : AnyObject]?) -> NSMutableURLRequest {
     
@@ -103,23 +108,32 @@ class Request : NSObject {
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
-    func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
+    func parseJSONWithCompletionHandler(data: NSData?, response: NSURLResponse?, error: NSError?, isUdacity: BooleanLiteralType, completionHandler: (data: AnyObject?, result: NSURLResponse?, error: NSError?) -> Void) {
         
-        var parsingError: NSError? = nil
+        //handle error in request case
+        if(error != nil){
+            completionHandler(data: nil, result: nil, error: error!)
+            return
+        }
         
+        var preparsedData = data
         let parsedResult: AnyObject?
-        do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
-        } catch let error as NSError {
-            parsingError = error
-            parsedResult = nil
+        
+        if(isUdacity){
+            preparsedData = parseUdacityData(preparsedData!)
         }
         
-        if let error = parsingError {
-            completionHandler(result: nil, error: error)
-        } else {
-            completionHandler(result: parsedResult, error: nil)
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(preparsedData!, options: NSJSONReadingOptions.AllowFragments)
+        } catch let error as NSError {
+            //handle error in parsing case
+            print("Error in parsing case.")
+            completionHandler(data: nil, result: nil, error: error)
+            return
         }
+        
+        completionHandler(data: parsedResult, result: response!, error: nil)
+        
     }
     
 }

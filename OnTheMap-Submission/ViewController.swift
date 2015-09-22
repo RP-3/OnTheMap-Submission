@@ -18,13 +18,7 @@ class ViewController: UIViewController {
     let udacity = Udacity.sharedInstance()
     
     @IBAction func loginAction(sender: AnyObject) {
-        udacity.login(emailOutlet.text!, password: passwordOutlet.text!, completionHandler: { (data, response, error) -> Void in
-            if error != nil { // Handle error…
-                print(error)
-                return
-            }
-            print(NSString(data: data, encoding: NSUTF8StringEncoding))
-        })
+        udacity.login(emailOutlet.text!, password: passwordOutlet.text!)
     }
 
     override func viewDidLoad() {
