@@ -109,8 +109,8 @@ class Request : NSObject {
     }
     
     func parseJSONWithCompletionHandler(data: NSData?, response: NSURLResponse?, error: NSError?, isUdacity: BooleanLiteralType, completionHandler: (data: AnyObject?, result: NSURLResponse?, error: NSError?) -> Void) {
-        
-        //handle error in request case
+
+        //handle error in connection case
         if(error != nil){
             completionHandler(data: nil, result: nil, error: error!)
             return
@@ -124,7 +124,7 @@ class Request : NSObject {
         }
         
         do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(preparsedData!, options: NSJSONReadingOptions.AllowFragments)
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(preparsedData!, options: NSJSONReadingOptions.AllowFragments) 
         } catch let error as NSError {
             //handle error in parsing case
             print("Error in parsing case.")

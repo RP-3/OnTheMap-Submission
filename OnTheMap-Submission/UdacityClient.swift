@@ -19,7 +19,7 @@ class Udacity {
         "expiration": nil
     ]
     
-    func login(username: String, password: String){
+    func login(username: String, password: String, callback: ((data: [String: String?]?, error: String?) -> Void)) {
 
         let url = baseURL + "session"
         
@@ -31,14 +31,32 @@ class Udacity {
         ]
         
         request.POST(url, body: reqBody, isUdacity:true) { (data, response, error) -> Void in
-            if error != nil { // Handle error…
-                print("RP3! Error!")
-                print(error)
+            
+            //TODO: Handle connection error
+            if error != nil {
+                callback(data: nil, error: error?.description)
                 return
             }
             
-            print("RP3! Data!")
-            print(data)
+            //handle user error
+            let httpResponse = response as! NSHTTPURLResponse
+            if(httpResponse.statusCode > 399 && httpResponse.statusCode < 500){
+                callback(data: nil, error: "Invalid login credentials")
+                return
+            }
+            
+            //no errors
+            //set up the session in our Udacity client
+            let account = data!["account"] as! NSDictionary
+            self.session["key"] = account["key"]! as? String
+            
+            let dataSession = data!["session"] as! NSDictionary
+            self.session["sessionId"] = dataSession["id"] as? String
+            self.session["expiration"] = dataSession["expiration"] as? String
+            
+            //return session data to login view controller (not used: just as a courtesy)
+            callback(data: self.session, error: nil)
+            return
         }
 
     }
