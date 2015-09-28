@@ -24,14 +24,17 @@ class Request : NSObject {
         super.init()
     }
     
-    func GET(url: String, callback: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
-//        let request = makeRequest(url, method: "GET", body: nil)
-//        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
-//        task.resume()
+    func GET(url: String, headers: [String: String]?, isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
+        let request = makeRequest(url, method: "GET", body: nil, headers: headers)
+        let task = session.dataTaskWithRequest(request) {downloadData, downloadResponse, downloadError in
+            print(downloadData)
+            self.parseJSONWithCompletionHandler(downloadData, response: downloadResponse, error: downloadError, isUdacity: isUdacity, completionHandler: callback!)
+        }
+        task.resume()
     }
     
-    func POST(url: String, body: [String : AnyObject], isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
-        let request = makeRequest(url, method: "POST", body: body)
+    func POST(url: String, headers: [String: String]?, body: [String : AnyObject], isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
+        let request = makeRequest(url, method: "POST", body: body, headers: nil)
         let task = session.dataTaskWithRequest(request) {downloadData, downloadResponse, downloadError in
             self.parseJSONWithCompletionHandler(downloadData, response: downloadResponse, error: downloadError, isUdacity: isUdacity, completionHandler: callback!)
         }
@@ -54,12 +57,18 @@ class Request : NSObject {
         return data.subdataWithRange(NSMakeRange(5, data.length - 5)) // subset response data
     }
     
-    func makeRequest(url:String, method: String, body: [String : AnyObject]?) -> NSMutableURLRequest {
+    func makeRequest(url:String, method: String, body: [String : AnyObject]?, headers: [String: String]?) -> NSMutableURLRequest {
     
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let headerDictionary = headers {
+            for (header, value) in headerDictionary {
+                request.addValue(value, forHTTPHeaderField: header)
+            }
+        }
         
         if let requestBodyDictionary = body {
             

@@ -11,8 +11,15 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    let parse = Parse.sharedInstance()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        parse.getStudentLocations() { (data, error) -> Void in
+            
+            print(data)
+            
+        }
         
     }
     

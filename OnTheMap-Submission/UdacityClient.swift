@@ -30,7 +30,7 @@ class Udacity {
             ]
         ]
         
-        request.POST(url, body: reqBody, isUdacity:true) { (data, response, error) -> Void in
+        request.POST(url, headers: nil, body: reqBody, isUdacity:true) { (data, response, error) -> Void in
             
             //TODO: Handle connection error
             if error != nil {
