@@ -61,10 +61,6 @@ class Udacity {
 
     }
     
-    func parseUdacityData(data:NSData) ->NSData{
-        return data.subdataWithRange(NSMakeRange(5, data.length - 5)) // subset response data
-    }
-    
     class func sharedInstance() -> Udacity {
         
         struct Singleton {
