@@ -16,8 +16,12 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         parse.getStudentLocations() { (data, error) -> Void in
+            if (error != nil){
+                //handle error UI
+                return
+            }
             
-            print(data)
+            print(data!)
             
         }
         

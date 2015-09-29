@@ -18,7 +18,47 @@ class Parse {
         "X-Parse-REST-API-Key": "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     ]
     
-    func getStudentLocations(callback: ((data: [String: String?]?, error: String?) -> Void)) {
+    struct StudentData {
+        var createdAt: String?
+        var firstName: String?
+        var lastName: String?
+        var latitude: Float32?
+        var longitude: Float32?
+        var mapString: String?
+        var mediaURL: String?
+        var objectId: String?
+        var uniqueKey: String?
+        var updatedAt: String?
+    }
+    
+    func parseStudentData(data: [NSDictionary]) -> [StudentData]{
+        
+        var result: Array<StudentData> = []
+        
+        for dict in data {
+            
+            var s:StudentData = StudentData()
+            
+            s.createdAt = (dict["createdAt"] as AnyObject? as? String?)!
+            s.firstName = (dict["firstName"] as AnyObject? as? String?)!
+            s.lastName = (dict["lastName"] as AnyObject? as? String?)!
+            s.latitude = (dict["latitude"]  as AnyObject? as? Float32?)!
+            s.longitude = (dict["longitude"]  as AnyObject? as? Float32?)!
+            s.mapString = (dict["mapString"] as AnyObject? as? String?)!
+            s.mediaURL = (dict["mediaURL"] as AnyObject? as? String?)!
+            s.objectId = (dict["objectId"] as AnyObject? as? String?)!
+            s.uniqueKey = (dict["uniqueKey"]  as AnyObject? as? String?)!
+            s.updatedAt = (dict["updatedAt"] as AnyObject? as? String?)!
+
+            result.append(s)
+            
+        }
+        
+        return result
+        
+    }
+    
+    func getStudentLocations(callback: ((data: [StudentData]?, error: String?) -> Void)) {
         
         let url = baseURL + "StudentLocation"
         
@@ -37,11 +77,12 @@ class Parse {
                 return
             }
             
-            //no errors: parse data
-            print(data)
+            let arrayObjs = data as! [String: AnyObject]
+            let arrayDicts = (arrayObjs["results"]! as? [NSDictionary])
+            let result = self.parseStudentData(arrayDicts!)
             
             //return session data to login view controller (not used: just as a courtesy)
-            //callback(data: self.session, error: nil)
+            callback(data: result, error: nil)
             return
         }
         
