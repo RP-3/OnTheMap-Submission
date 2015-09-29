@@ -27,7 +27,6 @@ class Request : NSObject {
     func GET(url: String, headers: [String: String]?, isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
         let request = makeRequest(url, method: "GET", body: nil, headers: headers)
         let task = session.dataTaskWithRequest(request) {downloadData, downloadResponse, downloadError in
-            print(downloadData)
             self.parseJSONWithCompletionHandler(downloadData, response: downloadResponse, error: downloadError, isUdacity: isUdacity, completionHandler: callback!)
         }
         task.resume()
@@ -140,7 +139,7 @@ class Request : NSObject {
             completionHandler(data: nil, result: nil, error: error)
             return
         }
-        
+
         completionHandler(data: parsedResult, result: response!, error: nil)
         
     }
