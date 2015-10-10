@@ -9,58 +9,81 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     let parse = Parse.sharedInstance()
+    let udacity = Udacity.sharedInstance()
+    
+    @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        mapView.delegate = self
+        
         parse.getStudentLocations() { (data, error) -> Void in
             if (error != nil){
-                //handle error UI
-                return
+                //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
+                dispatch_async(dispatch_get_main_queue(), {
+                    let alertController = UIAlertController(title: "Error downloading student data.", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    alertController.addAction(UIAlertAction(title: "Aw shucks!", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                })
             }
             
-            print(data!)
+            var studentPinsArray: Array<StudentPin> = []
             
+            for student in data! {
+                let studentName = student.firstName! + " " + student.lastName!
+                let studentCoord = CLLocationCoordinate2D(latitude: student.latitude!, longitude: student.longitude!)
+                let studentSubtitle = student.mediaURL!
+                
+                let newStudentPin = StudentPin(title: studentName, subtitle: studentSubtitle, coordinate: studentCoord)
+                studentPinsArray.append(newStudentPin)
+            }
+            
+            //add annotations from main queue
+            dispatch_async(dispatch_get_main_queue(), {
+                self.mapView.addAnnotations(studentPinsArray)
+            })
+    
         }
-        
+    
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func logout(sender: AnyObject) {
+        udacity.logout(){() -> Void in
+            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController")
+            self.presentViewController(controller, animated: true, completion: nil)
+        }
+    }
+    @IBAction func updateDetails(sender: AnyObject) {
+        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InformationViewController")
+        self.presentViewController(controller, animated: true, completion: nil)
     }
     
-    // MARK: - MKMapViewDelegate
     
-    // Here we create a view with a "right callout accessory view". You might choose to look into other
-    // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
-    // method in TableViewDataSource.
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    // addAnnotation delegate
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
-        
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
+
         if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            let studentAnnotation = annotation as! StudentPin
+            pinView = MKPinAnnotationView(annotation: studentAnnotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinColor = .Red
             pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-        }
-        else {
+        }else{
             pinView!.annotation = annotation
         }
         
         return pinView
     }
     
-    
-    // This delegate method is implemented to respond to taps. It opens the system browser
-    // to the URL specified in the annotationViews subtitle property.
-    func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
+    // Respond to taps
+    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == annotationView.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
             app.openURL(NSURL(string: annotationView.annotation!.subtitle!!)!)

@@ -18,47 +18,56 @@ class Parse {
         "X-Parse-REST-API-Key": "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     ]
     
-    struct StudentData {
-        var createdAt: String?
+    var studentData:[StudentInformation]? = nil
+    
+    struct StudentInformation {
+        var createdAt: NSDate?
         var firstName: String?
         var lastName: String?
-        var latitude: Float32?
-        var longitude: Float32?
+        var latitude: Double?
+        var longitude: Double?
         var mapString: String?
         var mediaURL: String?
         var objectId: String?
         var uniqueKey: String?
-        var updatedAt: String?
+        var updatedAt: NSDate?
+        
+        init (dict: NSDictionary) {
+            
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            
+            let createdDateString = (dict["createdAt"] as AnyObject? as? String?)!
+            let updatedDateString = (dict["updatedAt"] as AnyObject? as? String?)!
+            
+            createdAt = formatter.dateFromString(createdDateString!)
+            updatedAt = formatter.dateFromString(updatedDateString!)
+            firstName = (dict["firstName"] as AnyObject? as? String?)!
+            lastName = (dict["lastName"] as AnyObject? as? String?)!
+            latitude = (dict["latitude"]  as AnyObject? as? Double?)!
+            longitude = (dict["longitude"]  as AnyObject? as? Double?)!
+            mapString = (dict["mapString"] as AnyObject? as? String?)!
+            mediaURL = (dict["mediaURL"] as AnyObject? as? String?)!
+            objectId = (dict["objectId"] as AnyObject? as? String?)!
+            uniqueKey = (dict["uniqueKey"]  as AnyObject? as? String?)!
+
+        }
     }
     
-    func parseStudentData(data: [NSDictionary]) -> [StudentData]{
+    func parseStudentData(data: [NSDictionary]) -> [StudentInformation]{
         
-        var result: Array<StudentData> = []
+        var result: Array<StudentInformation> = []
         
         for dict in data {
-            
-            var s:StudentData = StudentData()
-            
-            s.createdAt = (dict["createdAt"] as AnyObject? as? String?)!
-            s.firstName = (dict["firstName"] as AnyObject? as? String?)!
-            s.lastName = (dict["lastName"] as AnyObject? as? String?)!
-            s.latitude = (dict["latitude"]  as AnyObject? as? Float32?)!
-            s.longitude = (dict["longitude"]  as AnyObject? as? Float32?)!
-            s.mapString = (dict["mapString"] as AnyObject? as? String?)!
-            s.mediaURL = (dict["mediaURL"] as AnyObject? as? String?)!
-            s.objectId = (dict["objectId"] as AnyObject? as? String?)!
-            s.uniqueKey = (dict["uniqueKey"]  as AnyObject? as? String?)!
-            s.updatedAt = (dict["updatedAt"] as AnyObject? as? String?)!
-
+            let s:StudentInformation = StudentInformation(dict: dict)
             result.append(s)
-            
         }
         
         return result
         
     }
     
-    func getStudentLocations(callback: ((data: [StudentData]?, error: String?) -> Void)) {
+    func getStudentLocations(callback: ((data: [StudentInformation]?, error: String?) -> Void)) {
         
         let url = baseURL + "StudentLocation"
         
@@ -79,10 +88,10 @@ class Parse {
             
             let arrayObjs = data as! [String: AnyObject]
             let arrayDicts = (arrayObjs["results"]! as? [NSDictionary])
-            let result = self.parseStudentData(arrayDicts!)
+            self.studentData = self.parseStudentData(arrayDicts!)
             
             //return session data to login view controller (not used: just as a courtesy)
-            callback(data: result, error: nil)
+            callback(data: self.studentData, error: nil)
             return
         }
         

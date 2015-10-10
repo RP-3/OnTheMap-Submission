@@ -61,6 +61,13 @@ class Udacity {
 
     }
     
+    func logout(callback: (() -> Void)) {
+        session["key"] = nil
+        session["sessionId"] = nil
+        session["expiration"] = nil
+        callback()
+    }
+    
     class func sharedInstance() -> Udacity {
         
         struct Singleton {
