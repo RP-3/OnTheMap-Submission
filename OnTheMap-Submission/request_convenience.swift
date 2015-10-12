@@ -33,7 +33,7 @@ class Request : NSObject {
     }
     
     func POST(url: String, headers: [String: String]?, body: [String : AnyObject], isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
-        let request = makeRequest(url, method: "POST", body: body, headers: nil)
+        let request = makeRequest(url, method: "POST", body: body, headers: headers)
         let task = session.dataTaskWithRequest(request) {downloadData, downloadResponse, downloadError in
             self.parseJSONWithCompletionHandler(downloadData, response: downloadResponse, error: downloadError, isUdacity: isUdacity, completionHandler: callback!)
         }

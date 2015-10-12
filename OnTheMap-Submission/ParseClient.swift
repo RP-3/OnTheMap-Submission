@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class Parse {
     
@@ -93,6 +94,56 @@ class Parse {
             //return session data to login view controller (not used: just as a courtesy)
             callback(data: self.studentData, error: nil)
             return
+        }
+        
+    }
+    
+    func upsertStudentData(studentId: String, studentUpdate: [String: AnyObject], callback: ((error: String?) -> Void)) {
+        
+        //check student data has loaded
+        if(studentData == nil){
+            callback(error: "Student Data not yet loaded")
+            return
+        }
+        
+        //check if studentId exists in studentData array
+        var alreadyPosted: Bool = false
+        
+        for student in studentData! {
+            if (student.uniqueKey == studentId){
+                alreadyPosted = true
+            }
+        }
+        
+        if(alreadyPosted == false){
+            //POST to update the existing value
+            let url = baseURL + "StudentLocation"
+            
+            request.POST(url, headers: reqHeaders, body: studentUpdate, isUdacity: false) { (data, response, error) -> Void in
+                
+                //handle connection error
+                if error != nil {
+                    callback(error: error?.description)
+                    return
+                }
+                
+                //handle user error
+                let httpResponse = response as! NSHTTPURLResponse
+                if(httpResponse.statusCode > 399 && httpResponse.statusCode < 500){
+                    callback(error: "Access denied")
+                    return
+                }
+                
+                //no errors!
+                callback(error: nil)
+                return
+                
+            }
+            
+        }else{
+            //PUT to create a new value
+            
+            
         }
         
     }

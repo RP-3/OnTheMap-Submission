@@ -25,8 +25,8 @@ class Udacity {
         
         let reqBody = [
             "udacity" : [
-                "username": username,
-                "password": password
+                "username": "sarith21@gmail.com",
+                "password": "2oQcETzT6XrD"
             ]
         ]
         
@@ -59,6 +59,10 @@ class Udacity {
             return
         }
 
+    }
+    
+    func getSession()->[String:String?]{
+        return self.session
     }
     
     func logout(callback: (() -> Void)) {
