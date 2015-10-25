@@ -10,6 +10,11 @@ import UIKit
 
 class ProgressIndicator: UIVisualEffectView {
     
+    /*
+    This implementation is open-sourced code.
+    Original source: http://stackoverflow.com/questions/28785715/how-to-display-an-activity-indicator-with-text-on-ios-8-with-swift
+    */
+    
     var text: String? {
         didSet {
             label.text = text
