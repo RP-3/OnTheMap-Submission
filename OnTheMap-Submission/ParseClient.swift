@@ -98,6 +98,22 @@ class Parse {
         
     }
     
+    func getStudentInfo(studentId: String)->StudentInformation? {
+        
+        if(studentData == nil){
+            return nil
+        }
+        
+        //check if studentId exists in studentData array
+        for student in studentData! {
+            if (student.uniqueKey == studentId){
+                return student
+            }
+        }
+        
+        return nil
+    }
+    
     func upsertStudentData(studentId: String, studentUpdate: [String: AnyObject], callback: ((error: String?) -> Void)) {
         
         //check student data has loaded
@@ -108,15 +124,17 @@ class Parse {
         
         //check if studentId exists in studentData array
         var alreadyPosted: Bool = false
+        var objectId: String? = nil
         
         for student in studentData! {
             if (student.uniqueKey == studentId){
                 alreadyPosted = true
+                objectId = student.objectId
             }
         }
         
         if(alreadyPosted == false){
-            //POST to update the existing value
+            //POST to create a new value
             let url = baseURL + "StudentLocation"
             
             request.POST(url, headers: reqHeaders, body: studentUpdate, isUdacity: false) { (data, response, error) -> Void in
@@ -141,7 +159,30 @@ class Parse {
             }
             
         }else{
-            //PUT to create a new value
+            //PUT to update an existing value
+            let url = baseURL + "StudentLocation/" + objectId!
+            
+            request.PUT(url, headers: reqHeaders, body: studentUpdate, isUdacity: false) { (data, response, error) -> Void in
+                
+                //handle connection error
+                if error != nil {
+                    callback(error: error?.description)
+                    return
+                }
+                
+                //handle user error
+                let httpResponse = response as! NSHTTPURLResponse
+                if(httpResponse.statusCode > 399 && httpResponse.statusCode < 500){
+                    callback(error: "Access denied")
+                    return
+                }
+                
+                //no errors!
+                callback(error: nil)
+                return
+                
+            }
+
             
             
         }

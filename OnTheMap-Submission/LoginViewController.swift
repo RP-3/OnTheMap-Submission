@@ -18,12 +18,17 @@ class LoginViewController: UIViewController {
     let udacity = Udacity.sharedInstance()
     
     @IBAction func loginAction(sender: AnyObject) {
+        
+        let progressIndicator = ProgressIndicator(text: "Logging in")
+        self.view.addSubview(progressIndicator)
+        
         udacity.login(emailOutlet.text!, password: passwordOutlet.text!) { (data, error) -> Void in
             
             //display error to user
             if error != nil {
                 //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
                 dispatch_async(dispatch_get_main_queue(), {
+                    progressIndicator.removeFromSuperview()
                     let alertController = UIAlertController(title: "Something wong", message: error, preferredStyle: UIAlertControllerStyle.Alert)
                     alertController.addAction(UIAlertAction(title: "Darn it...", style: UIAlertActionStyle.Default,handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
@@ -31,11 +36,17 @@ class LoginViewController: UIViewController {
                 
             }else{
             //transition tab bar controller
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    progressIndicator.removeFromSuperview()
+                })
+                
                 let controller = self.storyboard!.instantiateViewControllerWithIdentifier("AuthenticatedAppController") as! UITabBarController
                 self.presentViewController(controller, animated: true, completion: nil)
             }
             
         }
+        
     }
 
     override func viewDidLoad() {

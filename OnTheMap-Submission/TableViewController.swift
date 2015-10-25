@@ -17,7 +17,10 @@ class TableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        getStudentData()
+    }
+    
+    func getStudentData() {
         parse.getStudentLocations() { (data, error) -> Void in
             if (error != nil){
                 //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
@@ -39,6 +42,9 @@ class TableViewController: UITableViewController {
         }
     }
     
+    @IBAction func refreshData(sender: AnyObject) {
+        getStudentData()
+    }
     
     @IBAction func logout(sender: AnyObject) {
         udacity.logout(){() -> Void in
@@ -77,7 +83,7 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let student = studentData[indexPath.row]
-        print(student)
+
         if let url = student.mediaURL{
             //link provided
             let app = UIApplication.sharedApplication()

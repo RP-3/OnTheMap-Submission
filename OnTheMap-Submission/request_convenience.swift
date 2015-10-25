@@ -40,10 +40,12 @@ class Request : NSObject {
         task.resume()
     }
     
-    func PUT(url: String, body: [String : AnyObject], callback: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?) {
-//        let request = makeRequest(url, method: "PUT", body: nil)
-//        let task = session.dataTaskWithRequest(request, completionHandler: completionHandler!)
-//        task.resume()
+    func PUT(url: String, headers: [String: String]?, body: [String : AnyObject], isUdacity: BooleanLiteralType, callback: ((data: AnyObject?, response: NSURLResponse?, error: NSError?) -> Void)?) {
+        let request = makeRequest(url, method: "PUT", body: body, headers: headers)
+        let task = session.dataTaskWithRequest(request) {downloadData, downloadResponse, downloadError in
+            self.parseJSONWithCompletionHandler(downloadData, response: downloadResponse, error: downloadError, isUdacity: isUdacity, completionHandler: callback!)
+        }
+        task.resume()
     }
     
     func DELETE(url: String, body: [String : AnyObject], callback: ((data: NSData?, response: NSURLResponse?, error: NSError?) -> Void)?){

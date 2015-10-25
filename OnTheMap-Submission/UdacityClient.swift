@@ -19,20 +19,56 @@ class Udacity {
         "expiration": nil
     ]
     
+    var user: [String: String?] = [
+        "firstName": nil,
+        "lastName": nil
+    ]
+    
+    func _getUserData(userId: String){
+        let url = baseURL + "users/" + userId
+        
+        request.GET(url, headers: nil, isUdacity: true) { (data, response, error) -> Void in
+            
+            //Handle connection error
+            if error != nil {
+                return
+            }
+            
+            //handle user error
+            let httpResponse = response as! NSHTTPURLResponse
+            if(httpResponse.statusCode > 399 && httpResponse.statusCode < 500){
+                return
+            }
+            
+            //save public user info
+            let firstName = data!["user"]!!["first_name"] as! String
+            let lastName = data!["user"]!!["last_name"] as! String
+            
+            self.user["firstName"] = firstName
+            self.user["lastName"] = lastName
+
+        }
+
+    }
+    
+    func getUserData() -> [String: String?]{
+        return self.user
+    }
+    
     func login(username: String, password: String, callback: ((data: [String: String?]?, error: String?) -> Void)) {
 
         let url = baseURL + "session"
         
         let reqBody = [
             "udacity" : [
-                "username": "sarith21@gmail.com",
-                "password": "2oQcETzT6XrD"
+                "username": username,
+                "password": password
             ]
         ]
         
         request.POST(url, headers: nil, body: reqBody, isUdacity:true) { (data, response, error) -> Void in
             
-            //TODO: Handle connection error
+            //Handle connection error
             if error != nil {
                 callback(data: nil, error: error?.description)
                 return
@@ -53,6 +89,8 @@ class Udacity {
             let dataSession = data!["session"] as! NSDictionary
             self.session["sessionId"] = dataSession["id"] as? String
             self.session["expiration"] = dataSession["expiration"] as? String
+            
+            self._getUserData((account["key"]! as? String)!)
             
             //return session data to login view controller (not used: just as a courtesy)
             callback(data: self.session, error: nil)

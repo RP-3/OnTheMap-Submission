@@ -21,35 +21,53 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         
+        getStudentData()
+    
+    }
+    
+    func getStudentData(){
+        
         parse.getStudentLocations() { (data, error) -> Void in
             if (error != nil){
                 //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
                 dispatch_async(dispatch_get_main_queue(), {
+                    
                     let alertController = UIAlertController(title: "Error downloading student data.", message: error, preferredStyle: UIAlertControllerStyle.Alert)
                     alertController.addAction(UIAlertAction(title: "Aw shucks!", style: UIAlertActionStyle.Default,handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
                 })
-            }
-            
-            var studentPinsArray: Array<StudentPin> = []
-            
-            for student in data! {
-                let studentName = student.firstName! + " " + student.lastName!
-                let studentCoord = CLLocationCoordinate2D(latitude: student.latitude!, longitude: student.longitude!)
-                let studentSubtitle = student.mediaURL!
+            }else{
                 
-                let newStudentPin = StudentPin(title: studentName, subtitle: studentSubtitle, coordinate: studentCoord)
-                studentPinsArray.append(newStudentPin)
+                var studentPinsArray: Array<StudentPin> = []
+                
+                for student in data! {
+                    let studentName = student.firstName! + " " + student.lastName!
+                    let studentCoord = CLLocationCoordinate2D(latitude: student.latitude!, longitude: student.longitude!)
+                    let studentSubtitle = student.mediaURL!
+                    
+                    let newStudentPin = StudentPin(title: studentName, subtitle: studentSubtitle, coordinate: studentCoord)
+                    studentPinsArray.append(newStudentPin)
+                }
+                
+                //add annotations from main queue
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    //remove all existing annotations
+                    let annotationsToRemove = self.mapView.annotations.filter { _ in return true }
+                    self.mapView.removeAnnotations( annotationsToRemove )
+                    
+                    //add the new ones
+                    self.mapView.addAnnotations(studentPinsArray)
+                })
             }
             
-            //add annotations from main queue
-            dispatch_async(dispatch_get_main_queue(), {
-                self.mapView.addAnnotations(studentPinsArray)
-            })
-    
         }
-    
     }
+    
+    @IBAction func refreshData(sender: AnyObject) {
+        getStudentData()
+    }
+    
     
     @IBAction func logout(sender: AnyObject) {
         udacity.logout(){() -> Void in

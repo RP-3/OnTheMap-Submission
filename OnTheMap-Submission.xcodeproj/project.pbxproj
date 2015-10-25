@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B208B6CC1BC9D14D0024B257 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B208B6CB1BC9D14D0024B257 /* InformationViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		B220353C1BC9773C00F28094 /* StudentPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B220353B1BC9773C00F28094 /* StudentPin.swift */; settings = {ASSET_TAGS = (); }; };
-		B220353E1BC9908A00F28094 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B220353D1BC9908A00F28094 /* TableViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		B2792A901BB98CD50049A0D8 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2792A8F1BB98CD50049A0D8 /* ParseClient.swift */; settings = {ASSET_TAGS = (); }; };
+		B208B6CC1BC9D14D0024B257 /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B208B6CB1BC9D14D0024B257 /* InformationViewController.swift */; };
+		B220353C1BC9773C00F28094 /* StudentPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B220353B1BC9773C00F28094 /* StudentPin.swift */; };
+		B220353E1BC9908A00F28094 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B220353D1BC9908A00F28094 /* TableViewController.swift */; };
+		B2792A901BB98CD50049A0D8 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2792A8F1BB98CD50049A0D8 /* ParseClient.swift */; };
+		B27EA5381BDC5DD8004D0214 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27EA5371BDC5DD8004D0214 /* ProgressIndicator.swift */; };
 		B2A3C52A1BA86463000A8B3F /* request_convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3C5291BA86463000A8B3F /* request_convenience.swift */; };
 		B2A3C52F1BA86B50000A8B3F /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A3C52E1BA86B50000A8B3F /* UdacityClient.swift */; };
 		B2D96B4B1BA1DDA6000A0470 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */; };
@@ -38,6 +39,7 @@
 		B220353B1BC9773C00F28094 /* StudentPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentPin.swift; sourceTree = "<group>"; };
 		B220353D1BC9908A00F28094 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B2792A8F1BB98CD50049A0D8 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		B27EA5371BDC5DD8004D0214 /* ProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		B2A3C5291BA86463000A8B3F /* request_convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = request_convenience.swift; sourceTree = "<group>"; };
 		B2A3C52E1BA86B50000A8B3F /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 		B2A3C52C1BA868F7000A8B3F /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				B2A3C5291BA86463000A8B3F /* request_convenience.swift */,
 				B2A3C52E1BA86B50000A8B3F /* UdacityClient.swift */,
 				B2792A8F1BB98CD50049A0D8 /* ParseClient.swift */,
 			);
@@ -114,12 +117,12 @@
 				B2E0DF071B9F2A4C00D3B6F5 /* AppDelegate.swift */,
 				B2E0DF091B9F2A4C00D3B6F5 /* LoginViewController.swift */,
 				B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */,
-				B2A3C5291BA86463000A8B3F /* request_convenience.swift */,
 				B2E0DF0B1B9F2A4C00D3B6F5 /* Main.storyboard */,
 				B220353D1BC9908A00F28094 /* TableViewController.swift */,
 				B208B6CB1BC9D14D0024B257 /* InformationViewController.swift */,
 				B2D96B4A1BA1DDA6000A0470 /* MapViewController.swift */,
 				B220353B1BC9773C00F28094 /* StudentPin.swift */,
+				B27EA5371BDC5DD8004D0214 /* ProgressIndicator.swift */,
 				B2E0DF0E1B9F2A4C00D3B6F5 /* Images.xcassets */,
 				B2E0DF101B9F2A4C00D3B6F5 /* LaunchScreen.xib */,
 				B2E0DF051B9F2A4C00D3B6F5 /* Supporting Files */,
@@ -255,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B220353C1BC9773C00F28094 /* StudentPin.swift in Sources */,
+				B27EA5381BDC5DD8004D0214 /* ProgressIndicator.swift in Sources */,
 				B208B6CC1BC9D14D0024B257 /* InformationViewController.swift in Sources */,
 				B2E0DF0A1B9F2A4C00D3B6F5 /* LoginViewController.swift in Sources */,
 				B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */,
