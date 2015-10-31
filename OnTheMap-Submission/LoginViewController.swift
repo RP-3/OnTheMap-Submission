@@ -28,7 +28,17 @@ class LoginViewController: UIViewController {
             if error != nil {
                 //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
                 dispatch_async(dispatch_get_main_queue(), {
-                    progressIndicator.removeFromSuperview()
+                    
+                    progressIndicator.removeFromSuperview() //remove progress indicator
+                    
+                    let animation = CABasicAnimation(keyPath: "position")
+                    animation.duration = 0.07
+                    animation.repeatCount = 4
+                    animation.autoreverses = true
+                    animation.fromValue = NSValue(CGPoint: CGPointMake(self.view.center.x - 10, self.view.center.y))
+                    animation.toValue = NSValue(CGPoint: CGPointMake(self.view.center.x + 10, self.view.center.y))
+                    self.view.layer.addAnimation(animation, forKey: "position")
+                    
                     let alertController = UIAlertController(title: "Something wong", message: error, preferredStyle: UIAlertControllerStyle.Alert)
                     alertController.addAction(UIAlertAction(title: "Darn it...", style: UIAlertActionStyle.Default,handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
