@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 import MapKit
+import WebKit
 import CoreLocation
 
-class InformationViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
+class InformationViewController: UIViewController, MKMapViewDelegate, WKNavigationDelegate, UITextFieldDelegate {
     
     let parse = Parse.sharedInstance()
     let udacity = Udacity.sharedInstance()
@@ -27,6 +28,8 @@ class InformationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         "latitude": "",
         "longitude": ""
     ]
+    
+    var webView: WKWebView!
 
     @IBOutlet weak var questionBox: UIView!
     @IBOutlet weak var cancelButton: UIButton!
@@ -41,9 +44,19 @@ class InformationViewController: UIViewController, MKMapViewDelegate, UITextFiel
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        if(submitButton.titleLabel?.text != "Confirm URL"){
+        if(submitButton.titleLabel?.text == "Confirm Location"){
             submitButton.setTitle("Find on Map", forState: UIControlState.Normal)   
+        }else if(submitButton.titleLabel?.text == "Confirm URL"){
+            submitButton.setTitle("Go to URL", forState: UIControlState.Normal)
         }
+    }
+
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if(submitButton.titleLabel?.text == "Confirm URL"){
+            submitButton.setTitle("Go to URL", forState: UIControlState.Normal)
+        }
+        
+        return true
     }
     
     @IBAction func submitLocation(sender: AnyObject) {
@@ -68,6 +81,15 @@ class InformationViewController: UIViewController, MKMapViewDelegate, UITextFiel
                 
             }
         }
+            
+        else if(submitButton.titleLabel?.text == "Go to URL"){
+            
+            let url = NSURL(string: locationInput.text!)!
+            webView.loadRequest(NSURLRequest(URL: url))
+            
+            submitButton.setTitle("Confirm URL", forState: UIControlState.Normal)
+            
+        }
         
         else if(submitButton.titleLabel?.text == "Confirm Location"){
             //if confirming chosen location
@@ -86,6 +108,20 @@ class InformationViewController: UIViewController, MKMapViewDelegate, UITextFiel
             }else{
                 locationInput.text = "https://www.google.com"
             }
+            
+            //replace mapview with webview
+            mapView.removeFromSuperview()
+            
+            webView = WKWebView(frame: detailContainerView.frame)
+            webView.center = CGPointMake(detailContainerView.frame.width/2, detailContainerView.frame.height/2)
+            webView.navigationDelegate = self
+            
+            
+            detailContainerView.addSubview(webView)
+            
+            let url = NSURL(string: locationInput.text!)!
+            webView.loadRequest(NSURLRequest(URL: url))
+            webView.allowsBackForwardNavigationGestures = true
 
             questionLabel.text = "Your Student Page URL?"
             
@@ -129,6 +165,17 @@ class InformationViewController: UIViewController, MKMapViewDelegate, UITextFiel
         
         
         
+    }
+    
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        locationInput.text = webView.URL?.absoluteURL.absoluteString
+    }
+    
+    func webView(webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: NSError) {
+        let alertController = UIAlertController(title: "Invalid URL", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+        submitButton.setTitle("Go to URL", forState: UIControlState.Normal)
     }
     
     
