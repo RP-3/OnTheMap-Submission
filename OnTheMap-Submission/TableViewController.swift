@@ -31,8 +31,11 @@ class TableViewController: UITableViewController {
                 })
             }
             
-            //sort data by updated date
-            self.studentData = data!.sort({$0.updatedAt!.timeIntervalSinceNow > $1.updatedAt!.timeIntervalSinceNow})
+            //if any data was returned
+            if let d = data{
+                //sort data by updated date
+                self.studentData = d.sort({$0.updatedAt!.timeIntervalSinceNow > $1.updatedAt!.timeIntervalSinceNow})
+            }
             
             //add annotations from main queue
             dispatch_async(dispatch_get_main_queue(), {
