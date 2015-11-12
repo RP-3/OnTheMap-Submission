@@ -47,12 +47,14 @@ class LoginViewController: UIViewController {
             }else{
             //transition tab bar controller
                 
-                dispatch_async(dispatch_get_main_queue(), {
-                    progressIndicator.removeFromSuperview()
-                })
-                
                 let controller = self.storyboard!.instantiateViewControllerWithIdentifier("AuthenticatedAppController") as! UITabBarController
-                self.presentViewController(controller, animated: true, completion: nil)
+                
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    progressIndicator.removeFromSuperview()
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
+                
+
             }
             
         }
