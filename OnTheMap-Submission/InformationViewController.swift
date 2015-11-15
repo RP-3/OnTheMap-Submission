@@ -14,6 +14,7 @@ import CoreLocation
 
 class InformationViewController: UIViewController, MKMapViewDelegate, WKNavigationDelegate, UITextFieldDelegate {
     
+    let studentDataModel = StudentInformationModel.sharedInstance()
     let parse = Parse.sharedInstance()
     let udacity = Udacity.sharedInstance()
     
@@ -60,6 +61,8 @@ class InformationViewController: UIViewController, MKMapViewDelegate, WKNavigati
     }
     
     @IBAction func submitLocation(sender: AnyObject) {
+        
+        locationInput.resignFirstResponder()
         
         if(submitButton.titleLabel?.text == "Confirm URL"){
             //if sending the request
@@ -188,7 +191,7 @@ class InformationViewController: UIViewController, MKMapViewDelegate, WKNavigati
         reqBody["firstName"] = udacity.getUserData()["firstName"]!
         reqBody["lastName"] = udacity.getUserData()["lastName"]!
             
-        if let userParseData = parse.getStudentInfo(studentId!) {
+        if let userParseData = studentDataModel.getStudentInfo(studentId!) {
             reqBody["mapString"] = userParseData.mapString!
             reqBody["mediaURL"] = userParseData.mediaURL!
         }

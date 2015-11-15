@@ -22,6 +22,8 @@
 		B2E0DF121B9F2A4C00D3B6F5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E0DF101B9F2A4C00D3B6F5 /* LaunchScreen.xib */; };
 		B2E0DF1E1B9F2A4C00D3B6F5 /* OnTheMap_SubmissionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF1D1B9F2A4C00D3B6F5 /* OnTheMap_SubmissionTests.swift */; };
 		B2E0DF281B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */; };
+		B2F3FFB41BF5A577001E2612 /* StudentInformationStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3FFB31BF5A577001E2612 /* StudentInformationStruct.swift */; };
+		B2F3FFB61BF5A5FE001E2612 /* StudentInformationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F3FFB51BF5A5FE001E2612 /* StudentInformationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		B2E0DF1C1B9F2A4C00D3B6F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2E0DF1D1B9F2A4C00D3B6F5 /* OnTheMap_SubmissionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheMap_SubmissionTests.swift; sourceTree = "<group>"; };
 		B2E0DF271B9F322D00D3B6F5 /* CAGradientLayer+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Convenience.swift"; sourceTree = "<group>"; };
+		B2F3FFB31BF5A577001E2612 /* StudentInformationStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformationStruct.swift; sourceTree = "<group>"; };
+		B2F3FFB51BF5A5FE001E2612 /* StudentInformationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudentInformationModel.swift; path = ../StudentInformationModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 		B2A3C52B1BA868EA000A8B3F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B2F3FFB51BF5A5FE001E2612 /* StudentInformationModel.swift */,
+				B2F3FFB31BF5A577001E2612 /* StudentInformationStruct.swift */,
 				B2A3C52C1BA868F7000A8B3F /* Clients */,
 			);
 			name = Model;
@@ -257,9 +263,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2F3FFB41BF5A577001E2612 /* StudentInformationStruct.swift in Sources */,
 				B220353C1BC9773C00F28094 /* StudentPin.swift in Sources */,
 				B27EA5381BDC5DD8004D0214 /* ProgressIndicator.swift in Sources */,
 				B208B6CC1BC9D14D0024B257 /* InformationViewController.swift in Sources */,
+				B2F3FFB61BF5A5FE001E2612 /* StudentInformationModel.swift in Sources */,
 				B2E0DF0A1B9F2A4C00D3B6F5 /* LoginViewController.swift in Sources */,
 				B2E0DF081B9F2A4C00D3B6F5 /* AppDelegate.swift in Sources */,
 				B2792A901BB98CD50049A0D8 /* ParseClient.swift in Sources */,

@@ -10,10 +10,9 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
+    let studentDataModel = StudentInformationModel.sharedInstance()
     let parse = Parse.sharedInstance()
     let udacity = Udacity.sharedInstance()
-    
-    var studentData:[Parse.StudentInformation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +20,7 @@ class TableViewController: UITableViewController {
     }
     
     func getStudentData() {
-        parse.getStudentLocations() { (data, error) -> Void in
+        parse.getStudentLocations() { (error) -> Void in
             if (error != nil){
                 //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
                 dispatch_async(dispatch_get_main_queue(), {
@@ -29,12 +28,6 @@ class TableViewController: UITableViewController {
                     alertController.addAction(UIAlertAction(title: "Aw shucks!", style: UIAlertActionStyle.Default,handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
                 })
-            }
-            
-            //if any data was returned
-            if let d = data{
-                //sort data by updated date
-                self.studentData = d.sort({$0.updatedAt!.timeIntervalSinceNow > $1.updatedAt!.timeIntervalSinceNow})
             }
             
             //add annotations from main queue
@@ -71,34 +64,41 @@ class TableViewController: UITableViewController {
             cell = UITableViewCell()
         }
         
-        /* Set cell defaults */
-        let currentStudent = studentData[indexPath.row]
-        cell!.textLabel!.text = currentStudent.firstName! + " " + currentStudent.lastName!
+        if let studentData = studentDataModel.getStudentData(){
+            /* Set cell defaults */
+            let currentStudent = studentData[indexPath.row]
+            cell!.textLabel!.text = currentStudent.firstName! + " " + currentStudent.lastName!
+        }
         
         return cell!
         
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentData.count
+        if let studentData = studentDataModel.getStudentData(){
+            return studentData.count
+        }else{
+            return 0
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let student = studentData[indexPath.row]
 
-        if let url = student.mediaURL{
-            //link provided
-            let app = UIApplication.sharedApplication()
-            app.openURL(NSURL(string: url)!)
-            
-        }else{
-            //student hasn't given us a link
-            let alertController = UIAlertController(title: student.firstName! + " hasn't provided a link.", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Aw shucks!", style: UIAlertActionStyle.Default,handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
+        if let studentData = studentDataModel.getStudentData(){
+            let student = studentData[indexPath.row]
+
+            if let url = student.mediaURL{
+                //link provided
+                let app = UIApplication.sharedApplication()
+                app.openURL(NSURL(string: url)!)
+                
+            }else{
+                //student hasn't given us a link
+                let alertController = UIAlertController(title: student.firstName! + " hasn't provided a link.", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Aw shucks!", style: UIAlertActionStyle.Default,handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
         }
-
     }
 
 }

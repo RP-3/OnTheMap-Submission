@@ -11,6 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
+    let studentDataModel = StudentInformationModel.sharedInstance()
     let parse = Parse.sharedInstance()
     let udacity = Udacity.sharedInstance()
     
@@ -27,7 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func getStudentData(){
         
-        parse.getStudentLocations() { (data, error) -> Void in
+        parse.getStudentLocations() { (error) -> Void in
             if (error != nil){
                 //dispatch async so we don't modify anything from the background thread in which the callback will be invoked
                 dispatch_async(dispatch_get_main_queue(), {
@@ -40,13 +41,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                 var studentPinsArray: Array<StudentPin> = []
                 
-                for student in data! {
-                    let studentName = student.firstName! + " " + student.lastName!
-                    let studentCoord = CLLocationCoordinate2D(latitude: student.latitude!, longitude: student.longitude!)
-                    let studentSubtitle = student.mediaURL!
+                if let studentData = self.studentDataModel.getStudentData(){
                     
-                    let newStudentPin = StudentPin(title: studentName, subtitle: studentSubtitle, coordinate: studentCoord)
-                    studentPinsArray.append(newStudentPin)
+                    for student in studentData {
+                        let studentName = student.firstName! + " " + student.lastName!
+                        let studentCoord = CLLocationCoordinate2D(latitude: student.latitude!, longitude: student.longitude!)
+                        let studentSubtitle = student.mediaURL!
+                        
+                        let newStudentPin = StudentPin(title: studentName, subtitle: studentSubtitle, coordinate: studentCoord)
+                        studentPinsArray.append(newStudentPin)
+                    }
                 }
                 
                 //add annotations from main queue
